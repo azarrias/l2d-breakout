@@ -1,5 +1,8 @@
 push = require 'lib.push'
 Class = require 'lib.class'
+require 'StateMachine'
+require 'BaseState'
+require 'StartState'
 
 MOBILE_OS = love.system.getOS() == 'Android' or love.system.getOS() == 'OS X'
 GAME_TITLE = 'Breakout'
@@ -18,8 +21,42 @@ function love.load()
     fullscreen = MOBILE_OS,
     resizable = not MOBILE_OS
   })
+
+  gTextures = {
+    ['background'] = love.graphics.newImage('graphics/background.png')
+  }
+  
+  gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()
+
+  gStateMachine = StateMachine {
+    ['start'] = function() return StartState() end
+  }
+  gStateMachine:change('start')
+  
+  love.keyboard.keysPressed = {}
 end
 
 function love.resize(w, h)
   push:resize(w, h)
+end
+
+function love.update(dt)
+  gStateMachine:update(dt)
+  love.keyboard.keysPressed = {}
+end
+
+-- Callback that processes key strokes just once
+-- Does not account for keys being held down
+function love.keypressed(key)
+  love.keyboard.keysPressed[key] = true
+end
+
+function love.draw()
+  push:apply('start')
+  love.graphics.draw(gTextures['background'],
+    0, 0, -- draw at 0, 0
+    0,    -- no rotation
+    VIRTUAL_WIDTH / (gBackgroundWidth - 1), VIRTUAL_HEIGHT / (gBackgroundHeight - 1))
+  gStateMachine:render()
+  push:apply('end')
 end
