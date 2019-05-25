@@ -9,7 +9,40 @@ GAME_TITLE = 'Breakout'
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
 VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 432, 243
 
-function love.load()
+local NEW_COLOR_RANGE = love._version_major > 0 or love._version_major == 0 and love._version_minor >= 11
+local gBackgroundWidth, gBackgroundHeight
+
+-- Wrapper functions to handle differences across love2d versions
+setColor = function(r, g, b, a)
+  if not r or not g or not b or 
+    not tonumber(r) or not tonumber(g) or not tonumber(b) 
+    or a and not tonumber(a) then
+    error("bad argument to 'setColor' (number expected)")
+  end
+  a = a or 255
+  if NEW_COLOR_RANGE then
+    love.graphics.setColor(r/255, g/255, b/255, a/255)
+  else
+    love.graphics.setColor(r, g, b, a)
+  end
+end
+
+clear = function(r, g, b, a, clearstencil, cleardepth)
+  if not r or not g or not b or 
+    not tonumber(r) or not tonumber(g) or not tonumber(b) 
+    or a and not tonumber(a) then
+    error("bad argument to 'clear' (number expected)")
+  end
+  a, clearstencil, cleardepth = a or 255, clearstencil or true, cleardepth or true
+  if NEW_COLOR_RANGE then
+    love.graphics.clear(r/255, g/255, b/255, a/255, clearstencil, cleardepth)
+  else
+    love.graphics.clear(r, g, b, a)
+  end
+end
+
+function love.load(arg)
+  if arg[#arg] == "-debug" then require("mobdebug").start() end
   -- use nearest-neighbor (point) filtering on upscaling and downscaling to prevent blurring of text and 
   -- graphics instead of the bilinear filter that is applied by default 
   love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -21,6 +54,12 @@ function love.load()
     fullscreen = MOBILE_OS,
     resizable = not MOBILE_OS
   })
+
+  gFonts = {
+    ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
+    ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
+    ['large'] = love.graphics.newFont('fonts/font.ttf', 32)
+  }
 
   gTextures = {
     ['background'] = love.graphics.newImage('graphics/background.png')
