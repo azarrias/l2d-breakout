@@ -9,6 +9,10 @@ function StartState:update(dt)
   if love.keyboard.keysPressed['up'] or love.keyboard.keysPressed['down'] then
     highlightedOption = highlightedOption == 1 and 2 or 1
   end
+  -- exit if esc is pressed
+  if love.keyboard.keysPressed['escape'] then
+    love.event.quit()
+  end
 end
 
 function StartState:render()
