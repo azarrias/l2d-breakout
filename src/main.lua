@@ -9,11 +9,23 @@ GAME_TITLE = 'Breakout'
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
 VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 432, 243
 
+gColors = {
+  red = { 255, 0, 0 },
+  green = { 0, 255, 0 },
+  blue = { 0, 0, 255 },
+  yellow = { 255, 255, 0 },
+  white = { 255, 255, 255 },
+  black = { 0, 0, 0 }
+}
+
 local NEW_COLOR_RANGE = love._version_major > 0 or love._version_major == 0 and love._version_minor >= 11
 local gBackgroundWidth, gBackgroundHeight
 
 -- Wrapper functions to handle differences across love2d versions
 setColor = function(r, g, b, a)
+  if type(r) == 'table' and not (g or b or a) then
+    r, g, b, a = unpack(r)
+  end
   if not r or not g or not b or 
     not tonumber(r) or not tonumber(g) or not tonumber(b) 
     or a and not tonumber(a) then
@@ -28,6 +40,9 @@ setColor = function(r, g, b, a)
 end
 
 clear = function(r, g, b, a, clearstencil, cleardepth)
+  if type(r) == 'table' and not (g or b or a) then
+    r, g, b, a = unpack(r)
+  end
   if not r or not g or not b or 
     not tonumber(r) or not tonumber(g) or not tonumber(b) 
     or a and not tonumber(a) then

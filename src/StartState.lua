@@ -20,19 +20,19 @@ function StartState:render()
 
   -- if we're highlighting 1, render that option yellow
   if highlightedOption == 1 then
-    setColor(255, 255, 0, 255)
+    setColor(gColors.yellow)
   end
   love.graphics.printf("START", 0, VIRTUAL_HEIGHT / 2 + 70, VIRTUAL_WIDTH, 'center')
 
   -- reset the color
-  setColor(255, 255, 255, 255)
+  setColor(gColors.white)
 
   -- render option 2 yellow if we're highlighting that one
   if highlightedOption == 2 then
-    setColor(255, 255, 0, 255)
+    setColor(gColors.yellow)
   end
   love.graphics.printf("HIGH SCORES", 0, VIRTUAL_HEIGHT / 2 + 90, VIRTUAL_WIDTH, 'center')
 
   -- reset the color
-  setColor(255, 255, 255, 255)
+  setColor(gColors.white)
 end
