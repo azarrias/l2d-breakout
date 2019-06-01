@@ -107,10 +107,21 @@ end
 
 function love.draw()
   push:apply('start')
+  
   love.graphics.draw(gTextures['background'],
     0, 0, -- draw at 0, 0
     0,    -- no rotation
     VIRTUAL_WIDTH / (gBackgroundWidth - 1), VIRTUAL_HEIGHT / (gBackgroundHeight - 1))
   gStateMachine:render()
+  
+  displayFPS(5, 5)
+  
   push:apply('end')
+end
+
+function displayFPS(x, y)
+    -- simple FPS display across all states
+    love.graphics.setFont(gFonts['small'])
+    setColor(gColors.green)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), x, y)
 end
