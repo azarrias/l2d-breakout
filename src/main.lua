@@ -81,6 +81,10 @@ function love.load(arg)
     ['background'] = love.graphics.newImage('graphics/background.png')
   }
   
+  gSounds = {
+    ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav')
+  }
+  
   gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()
 
   gStateMachine = StateMachine {

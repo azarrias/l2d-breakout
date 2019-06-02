@@ -8,6 +8,7 @@ function StartState:update(dt)
   -- toggle highlighted option if we press up or down arrow keys
   if love.keyboard.keysPressed['up'] or love.keyboard.keysPressed['down'] then
     highlightedOption = highlightedOption == 1 and 2 or 1
+    gSounds['paddle-hit']:play()
   end
   -- exit if esc is pressed
   if love.keyboard.keysPressed['escape'] then
