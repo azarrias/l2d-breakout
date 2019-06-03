@@ -1,8 +1,13 @@
 push = require 'lib.push'
 Class = require 'lib.class'
+
 require 'StateMachine'
 require 'BaseState'
 require 'StartState'
+
+require 'Paddle'
+
+require 'Util'
 
 MOBILE_OS = love.system.getOS() == 'Android' or love.system.getOS() == 'OS X'
 GAME_TITLE = 'Breakout'
@@ -78,7 +83,12 @@ function love.load(arg)
   }
 
   gTextures = {
-    ['background'] = love.graphics.newImage('graphics/background.png')
+    ['background'] = love.graphics.newImage('graphics/background.png'),
+    ['main'] = love.graphics.newImage('graphics/breakout.png')
+  }
+  
+  gFrames = {
+    ['paddles'] = GenerateQuadsPaddles(gTextures['main'])
   }
   
   gSounds = {
