@@ -1,5 +1,8 @@
 Paddle = Class{}
 
+-- paddle movement speed
+local PADDLE_SPEED = 200
+
 function Paddle:init()
   -- initialize to the horizontal middle a little above the bottom
   self.x = VIRTUAL_WIDTH / 2 - 32

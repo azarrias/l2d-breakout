@@ -4,6 +4,7 @@ Class = require 'lib.class'
 require 'StateMachine'
 require 'BaseState'
 require 'StartState'
+require 'PlayState'
 
 require 'Paddle'
 
@@ -92,13 +93,16 @@ function love.load(arg)
   }
   
   gSounds = {
-    ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav')
+    ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav'),
+    ['confirm'] = love.audio.newSource('sounds/confirm.wav'),
+    ['pause'] = love.audio.newSource('sounds/pause.wav')
   }
   
   gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()
 
   gStateMachine = StateMachine {
-    ['start'] = function() return StartState() end
+    ['start'] = function() return StartState() end,
+    ['play'] = function() return PlayState() end
   }
   gStateMachine:change('start')
   
