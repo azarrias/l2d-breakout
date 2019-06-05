@@ -7,6 +7,7 @@ require 'StartState'
 require 'PlayState'
 
 require 'Paddle'
+require 'Ball'
 
 require 'Util'
 
@@ -89,13 +90,15 @@ function love.load(arg)
   }
   
   gFrames = {
-    ['paddles'] = GenerateQuadsPaddles(gTextures['main'])
+    ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
+    ['balls'] = GenerateQuadsBalls(gTextures['main'])
   }
   
   gSounds = {
     ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav'),
     ['confirm'] = love.audio.newSource('sounds/confirm.wav'),
-    ['pause'] = love.audio.newSource('sounds/pause.wav')
+    ['pause'] = love.audio.newSource('sounds/pause.wav'),
+    ['wall-hit'] = love.audio.newSource('sounds/wall_hit.wav')
   }
   
   gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()
