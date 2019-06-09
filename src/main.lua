@@ -8,8 +8,10 @@ require 'PlayState'
 
 require 'Paddle'
 require 'Ball'
+require 'Brick'
 
 require 'Util'
+require 'LevelMaker'
 
 MOBILE_OS = love.system.getOS() == 'Android' or love.system.getOS() == 'OS X'
 GAME_TITLE = 'Breakout'
@@ -91,14 +93,16 @@ function love.load(arg)
   
   gFrames = {
     ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
-    ['balls'] = GenerateQuadsBalls(gTextures['main'])
+    ['balls'] = GenerateQuadsBalls(gTextures['main']),
+    ['bricks'] = GenerateQuadsBricks(gTextures['main'])
   }
   
   gSounds = {
     ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav'),
     ['confirm'] = love.audio.newSource('sounds/confirm.wav'),
     ['pause'] = love.audio.newSource('sounds/pause.wav'),
-    ['wall-hit'] = love.audio.newSource('sounds/wall_hit.wav')
+    ['wall-hit'] = love.audio.newSource('sounds/wall_hit.wav'),
+    ['brick-hit-2'] = love.audio.newSource('sounds/brick-hit-2.wav')
   }
   
   gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()

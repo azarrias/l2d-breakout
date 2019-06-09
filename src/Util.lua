@@ -94,4 +94,7 @@ function GenerateQuadsBalls(atlas)
   return quads
 end
 
-  
+-- Piece out the 21 bricks that we have starting from the top leftmost side of the spritesheet
+function GenerateQuadsBricks(atlas)
+  return table.slice(GenerateQuads(atlas, 32, 16), 1, 21)
+end
