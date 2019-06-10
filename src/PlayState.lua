@@ -36,6 +36,15 @@ function PlayState:update(dt)
     -- raise ball above paddle to prevent it from getting stuck
     self.ball.y = self.paddle.y - self.ball.height
     self.ball.dy = -self.ball.dy
+    
+    -- influence the ball's dx based on where it hits the paddle
+    -- and how the paddle is moving
+    if self.ball.x < self.paddle.x + (self.paddle.width / 2) and self.paddle.dx < 0 then
+      self.ball.dx = -50 - (8 * (self.paddle.x + self.paddle.width / 2 - self.ball.x))
+    elseif self.ball.x > self.paddle.x + (self.paddle.width / 2) and self.paddle.dx > 0 then
+      self.ball.dx = 50 + (8 * (self.ball.x - self.paddle.x - self.paddle.width / 2))
+    end
+    
     gSounds['paddle-hit']:play()
   end
   

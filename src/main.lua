@@ -98,11 +98,11 @@ function love.load(arg)
   }
   
   gSounds = {
-    ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav'),
-    ['confirm'] = love.audio.newSource('sounds/confirm.wav'),
-    ['pause'] = love.audio.newSource('sounds/pause.wav'),
-    ['wall-hit'] = love.audio.newSource('sounds/wall_hit.wav'),
-    ['brick-hit-2'] = love.audio.newSource('sounds/brick-hit-2.wav')
+    ['paddle-hit'] = love.audio.newSource('sounds/paddle_hit.wav', 'static'),
+    ['confirm'] = love.audio.newSource('sounds/confirm.wav', 'static'),
+    ['pause'] = love.audio.newSource('sounds/pause.wav', 'static'),
+    ['wall-hit'] = love.audio.newSource('sounds/wall_hit.wav', 'static'),
+    ['brick-hit-2'] = love.audio.newSource('sounds/brick-hit-2.wav', 'static')
   }
   
   gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()
