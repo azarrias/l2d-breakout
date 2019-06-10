@@ -48,10 +48,27 @@ function PlayState:update(dt)
     gSounds['paddle-hit']:play()
   end
   
-  -- detec collision across all bricks with the ball
+  -- detect collision across all bricks with the ball
   for k, brick in pairs(self.bricks) do
     if brick.inPlay and self.ball:collides(brick) then
       brick:hit()
+      
+      -- 2 is a small margin to prioritize the y collision
+      -- for the corner collisions to work better
+      if self.ball.x + 2 < brick.x and self.ball.dx > 0 then
+        self.ball.dx = -self.ball.dx
+        self.ball.x = brick.x - self.ball.width
+      elseif self.ball.x + self.ball.width - 2 > brick.x and self.ball.dx < 0 then
+        self.ball.dx = -self.ball.dx
+        self.ball.x = brick.x + brick.width
+      elseif self.ball.y < brick.y then
+        self.ball.dy = -self.ball.dy
+        self.ball.y = brick.y - self.ball.height
+      else
+        self.ball.dy = -self.ball.dy
+        self.ball.y = brick.y + brick.height
+      end
+
     end
   end
   
