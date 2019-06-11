@@ -48,27 +48,39 @@ function PlayState:update(dt)
     gSounds['paddle-hit']:play()
   end
   
-  -- detect collision across all bricks with the ball
+  -- detect ball collision iterating all bricks
   for k, brick in pairs(self.bricks) do
     if brick.inPlay and self.ball:collides(brick) then
       brick:hit()
       
-      -- 2 is a small margin to prioritize the y collision
-      -- for the corner collisions to work better
-      if self.ball.x + 2 < brick.x and self.ball.dx > 0 then
-        self.ball.dx = -self.ball.dx
-        self.ball.x = brick.x - self.ball.width
-      elseif self.ball.x + self.ball.width - 2 > brick.x and self.ball.dx < 0 then
-        self.ball.dx = -self.ball.dx
-        self.ball.x = brick.x + brick.width
-      elseif self.ball.y < brick.y then
-        self.ball.dy = -self.ball.dy
-        self.ball.y = brick.y - self.ball.height
+      if (self.ball.x + self.ball.width / 2) < (brick.x + brick.width / 2) then
+        shift_ball_x = brick.x - (self.ball.x + self.ball.width)
       else
-        self.ball.dy = -self.ball.dy
-        self.ball.y = brick.y + brick.height
+        shift_ball_x = brick.x + brick.width - self.ball.x
       end
-
+      
+      if (self.ball.y + self.ball.height / 2) < (brick.y + brick.height / 2) then
+        shift_ball_y = brick.y - (self.ball.y + self.ball.height)
+      else
+        shift_ball_y = brick.y + brick.height - self.ball.y
+      end
+      
+      -- Zero the shift axis that has the maximum shift (if any)
+      if shift_ball_y > shift_ball_x then
+        shift_ball_y = 0
+      elseif shift_ball_x > shift_ball_y then
+        shift_ball_x = 0
+      end
+      
+      self.ball.x = self.ball.x + shift_ball_x
+      self.ball.y = self.ball.y + shift_ball_y
+      
+      if shift_ball_x ~= 0 then
+        self.ball.dx = -self.ball.dx
+      end
+      if shift_ball_y ~= 0 then
+        self.ball.dy = -self.ball.dy
+      end
     end
   end
   
