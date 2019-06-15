@@ -81,6 +81,11 @@ function PlayState:update(dt)
       if shift_ball_y ~= 0 then
         self.ball.dy = -self.ball.dy
       end
+      
+      -- Scale y velocity to speed up the game
+      self.ball.dy = self.ball.dy * 1.02
+      -- Only allow colliding with one brick, for corner collisions
+      break
     end
   end
   
