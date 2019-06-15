@@ -1,18 +1,17 @@
 PlayState = Class{__includes = BaseState}
 
-function PlayState:init()
-  self.paddle = Paddle()
-  self.ball = Ball(1)
-  
-  self.ball:reset()
+function PlayState:enter(params)
+  self.paddle = params.paddle
+  self.bricks = params.bricks
+  self.health = params.health
+  self.score = params.score
+  self.ball = params.ball
   
   -- give ball random starting velocity
   self.ball.dx = math.random(-200, 200)
   self.ball.dy = math.random(-50, -60)
   
   self.paused = false
-  
-  self.bricks = LevelMaker.createMap()
 end
 
 function PlayState:update(dt)

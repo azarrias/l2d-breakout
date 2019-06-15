@@ -5,6 +5,7 @@ require 'StateMachine'
 require 'BaseState'
 require 'StartState'
 require 'PlayState'
+require 'ServeState'
 
 require 'Paddle'
 require 'Ball'
@@ -109,6 +110,7 @@ function love.load(arg)
 
   gStateMachine = StateMachine {
     ['start'] = function() return StartState() end,
+    ['serve'] = function() return ServeState() end,
     ['play'] = function() return PlayState() end
   }
   gStateMachine:change('start')
