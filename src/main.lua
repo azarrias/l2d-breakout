@@ -89,13 +89,15 @@ function love.load(arg)
 
   gTextures = {
     ['background'] = love.graphics.newImage('graphics/background.png'),
-    ['main'] = love.graphics.newImage('graphics/breakout.png')
+    ['main'] = love.graphics.newImage('graphics/breakout.png'),
+    ['hearts'] = love.graphics.newImage('graphics/hearts.png')
   }
   
   gFrames = {
     ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
     ['balls'] = GenerateQuadsBalls(gTextures['main']),
-    ['bricks'] = GenerateQuadsBricks(gTextures['main'])
+    ['bricks'] = GenerateQuadsBricks(gTextures['main']),
+    ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9)
   }
   
   gSounds = {
@@ -152,4 +154,25 @@ function displayFPS(x, y)
     love.graphics.setFont(gFonts['small'])
     setColor(gColors.green)
     love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), x, y)
+end
+
+--[[
+    Renders hearts based on how much health the player has. First renders
+    full hearts, then empty hearts for however much health we're missing.
+]]
+function renderHealth(health)
+    -- starting x position of our health rendering
+    local healthX = VIRTUAL_WIDTH * 0.8
+    
+    -- render health left
+    for i = 1, health do
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][1], healthX, 4)
+        healthX = healthX + 11
+    end
+
+    -- render missing health
+    for i = 1, 3 - health do
+        love.graphics.draw(gTextures['hearts'], gFrames['hearts'][2], healthX, 4)
+        healthX = healthX + 11
+    end
 end

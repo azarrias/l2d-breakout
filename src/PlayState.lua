@@ -101,6 +101,8 @@ function PlayState:render()
     brick:render()
   end
   
+  renderHealth(self.health)
+  
   if self.paused then
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf("GAME PAUSED", 0, VIRTUAL_HEIGHT / 2 - 16, VIRTUAL_WIDTH, 'center')
