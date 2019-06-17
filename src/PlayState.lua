@@ -65,9 +65,9 @@ function PlayState:update(dt)
       end
       
       -- Zero the shift axis that has the maximum shift (if any)
-      if shift_ball_y > shift_ball_x then
+      if math.abs(shift_ball_y) > math.abs(shift_ball_x) then
         shift_ball_y = 0
-      elseif shift_ball_x > shift_ball_y then
+      elseif math.abs(shift_ball_x) > math.abs(shift_ball_y) then
         shift_ball_x = 0
       end
       
