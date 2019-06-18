@@ -28,6 +28,10 @@ function PlayState:update(dt)
     return
   end
   
+  if love.keyboard.keysPressed['escape'] then
+    gStateMachine:change('start')
+  end
+  
   self.paddle:update(dt)
   self.ball:update(dt)
   
@@ -47,9 +51,29 @@ function PlayState:update(dt)
     gSounds['paddle-hit']:play()
   end
   
+  -- if ball goes past the paddle, decrement lives and either game over or serve again
+  if self.ball.y >= VIRTUAL_HEIGHT then
+    self.health = self.health - 1
+    gSounds['hurt']:play()
+    
+    if self.health == 0 then
+      gStateMachine:change('game-over', {
+        score = self.score
+      })
+    else
+      gStateMachine:change('serve', {
+        paddle = self.paddle,
+        bricks = self.bricks,
+        health = self.health,
+        score = self.score
+      })
+    end
+  end
+  
   -- detect ball collision iterating all bricks
   for k, brick in pairs(self.bricks) do
     if brick.inPlay and self.ball:collides(brick) then
+      self.score = self.score + 10
       brick:hit()
       
       if (self.ball.x + self.ball.width / 2) < (brick.x + brick.width / 2) then
@@ -86,10 +110,6 @@ function PlayState:update(dt)
       -- Only allow colliding with one brick, for corner collisions
       break
     end
-  end
-  
-  if love.keyboard.keysPressed['escape'] then
-    gStateMachine:change('start')
   end
 end
 
