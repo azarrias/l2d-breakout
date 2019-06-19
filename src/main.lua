@@ -165,7 +165,7 @@ end
 ]]
 function renderHealth(health)
     -- starting x position of our health rendering
-    local healthX = VIRTUAL_WIDTH * 0.8
+    local healthX = VIRTUAL_WIDTH * 0.75
     
     -- render health left
     for i = 1, health do
@@ -179,3 +179,11 @@ function renderHealth(health)
         healthX = healthX + 11
     end
 end
+
+-- Renders the score at the top right, left-side padding for the score number
+function renderScore(score)
+    love.graphics.setFont(gFonts['small'])
+    love.graphics.print('Score:', VIRTUAL_WIDTH - 60, 5)
+    love.graphics.printf(tostring(score), VIRTUAL_WIDTH - 50, 5, 40, 'right')
+end
+  

@@ -121,6 +121,7 @@ function PlayState:render()
     brick:render()
   end
   
+  renderScore(self.score)
   renderHealth(self.health)
   
   if self.paused then
