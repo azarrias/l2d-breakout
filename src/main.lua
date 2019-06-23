@@ -20,6 +20,8 @@ GAME_TITLE = 'Breakout'
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
 VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 432, 243
 
+BRICK_WIDTH, BRICK_HEIGHT = 32, 16
+
 gColors = {
   aquamarine = { 127, 255, 212 },
   red = { 255, 0, 0 },

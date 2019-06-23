@@ -24,6 +24,7 @@ function Brick:render()
     love.graphics.draw(gTextures['main'], -- Texture
       -- multiply color by 4 (because there are 4 tiers or bricks per color)
       -- and add the tier value to lookup the quad in the table
+      -- color goes from 1 to 5 and tier goes from 0 to 3
       gFrames['bricks'][1 + ((self.color - 1) * 4) + self.tier], -- Quad
       self.x, self.y) -- Position
   end
