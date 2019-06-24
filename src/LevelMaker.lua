@@ -14,8 +14,7 @@
 
 ROW_PATTERN_SOLID = 1
 ROW_PATTERN_ALTERNATE = 2
-ROW_PATTERN_SKIP = 3
-ROW_PATTERN_NONE = 4
+ROW_PATTERN_NONE = 3
 
 LevelMaker = Class{} 
 
@@ -45,25 +44,31 @@ function LevelMaker.createMap(level)
     repeat
       for y = 1, numRows do                      -- leave row 0 to display lives and score
         -- randomize pattern for each row
-        local rowPattern = math.random(1, 4)
+        local rowPattern = math.random(1, 3)
         local colors = {}
         local tiers = {}
         
         colors[1] = math.random(1, maxColor)
         tiers[1] = math.random(0, maxTier)
         
-        -- Flag to skip a block for the skip pattern
+        -- Flag to skip a block for the skip variant
+        skipColVariant = math.random(2) == 1 and 
+            (rowPattern == ROW_PATTERN_SOLID or rowPattern == ROW_PATTERN_ALTERNATE) and true or false
         skipColFlag = math.random(2) == 1 and true or false
         
-        if rowPattern == ROW_PATTERN_ALTERNATE then
+        -- Index for color and tier for the alternate and solid patterns
+        if rowPattern == ROW_PATTERN_SOLID then
+          index = 1
+        elseif rowPattern == ROW_PATTERN_ALTERNATE then
+          index = math.random(2)
           colors[2] = math.random(1, maxColor)
           tiers[2] = math.random(0, maxTier)
         elseif rowPattern == ROW_PATTERN_NONE then
           goto continue
         end
         
-        for x = 0, numCols - 1 do        
-          if rowPattern == ROW_PATTERN_SKIP and skipColFlag then
+        for x = 0, numCols - 1 do  
+          if skipColVariant and skipColFlag then
             skipColFlag = not skipColFlag
             goto continue
           else
@@ -77,8 +82,12 @@ function LevelMaker.createMap(level)
             y * BRICK_HEIGHT
           ) 
             
-          b.color = colors[x % #colors + 1]
-          b.tier = tiers[x % #tiers + 1]
+          b.color = colors[index]
+          b.tier = tiers[index]
+          
+          if rowPattern == ROW_PATTERN_ALTERNATE then
+            index = index % 2 + 1
+          end
 
           table.insert(bricks, b)
           
