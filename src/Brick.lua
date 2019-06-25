@@ -17,7 +17,23 @@ end
 function Brick:hit()
   gSounds['brick-hit-2']:stop()
   gSounds['brick-hit-2']:play()
-  self.inPlay = false
+  
+  -- Go to lower brick class
+  if self.color == 1 then
+    if self.tier > 0 then
+      self.tier = self.tier - 1
+      self.color = 5
+    else
+      self.inPlay = false
+    end
+  else
+    self.color = self.color - 1
+  end
+  
+  if not self.inPlay then
+    gSounds['brick-hit-1']:stop()
+    gSounds['brick-hit-1']:play()
+  end  
 end
 
 function Brick:render()
