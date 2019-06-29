@@ -73,7 +73,7 @@ function PlayState:update(dt)
   -- detect ball collision iterating all bricks
   for k, brick in pairs(self.bricks) do
     if brick.inPlay and self.ball:collides(brick) then
-      self.score = self.score + 10
+      self.score = self.score + (brick.tier * 200 + brick.color * 25)
       brick:hit()
       
       if (self.ball.x + self.ball.width / 2) < (brick.x + brick.width / 2) then
