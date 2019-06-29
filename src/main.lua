@@ -24,15 +24,17 @@ BRICK_WIDTH, BRICK_HEIGHT = 32, 16
 
 gColors = {
   aquamarine = { 127, 255, 212 },
-  red = { 255, 0, 0 },
-  green = { 0, 255, 0 },
-  blue = { 0, 0, 255 },
+  red = { 217, 87, 99 },
+  green = { 106, 190, 47 },
+  blue = { 99, 155, 255 },
   yellow = { 255, 255, 0 },
   white = { 255, 255, 255 },
-  black = { 0, 0, 0 }
+  black = { 0, 0, 0 },
+  purple = { 215, 123, 186 },
+  gold = { 251, 242, 54 }
 }
 
-local NEW_COLOR_RANGE = love._version_major > 0 or love._version_major == 0 and love._version_minor >= 11
+V11 = love._version_major > 0 or love._version_major == 0 and love._version_minor >= 11
 local gBackgroundWidth, gBackgroundHeight
 
 -- Wrapper functions to handle differences across love2d versions
@@ -46,7 +48,7 @@ setColor = function(r, g, b, a)
     error("bad argument to 'setColor' (number expected)")
   end
   a = a or 255
-  if NEW_COLOR_RANGE then
+  if V11 then
     love.graphics.setColor(r/255, g/255, b/255, a/255)
   else
     love.graphics.setColor(r, g, b, a)
@@ -63,7 +65,7 @@ clear = function(r, g, b, a, clearstencil, cleardepth)
     error("bad argument to 'clear' (number expected)")
   end
   a, clearstencil, cleardepth = a or 255, clearstencil or true, cleardepth or true
-  if NEW_COLOR_RANGE then
+  if V11 then
     love.graphics.clear(r/255, g/255, b/255, a/255, clearstencil, cleardepth)
   else
     love.graphics.clear(r, g, b, a)
@@ -93,7 +95,8 @@ function love.load(arg)
   gTextures = {
     ['background'] = love.graphics.newImage('graphics/background.png'),
     ['main'] = love.graphics.newImage('graphics/breakout.png'),
-    ['hearts'] = love.graphics.newImage('graphics/hearts.png')
+    ['hearts'] = love.graphics.newImage('graphics/hearts.png'),
+    ['particle'] = love.graphics.newImage('graphics/particle.png')
   }
   
   gFrames = {

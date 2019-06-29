@@ -111,6 +111,11 @@ function PlayState:update(dt)
       break
     end
   end
+  
+  -- for rendering the bricks particle systems
+  for k, brick in pairs(self.bricks) do
+    brick:update(dt)
+  end
 end
 
 function PlayState:render()
@@ -119,6 +124,11 @@ function PlayState:render()
   
   for k, brick in pairs(self.bricks) do
     brick:render()
+  end
+  
+  -- render all particle systems
+  for k, brick in pairs(self.bricks) do
+    brick:renderParticles()
   end
   
   renderScore(self.score)
