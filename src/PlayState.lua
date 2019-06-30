@@ -7,6 +7,7 @@ function PlayState:enter(params)
   self.score = params.score
   self.ball = params.ball
   self.level = params.level
+  self.highScores = params.highScores
   
   -- give ball random starting velocity
   self.ball.dx = math.random(-200, 200)
@@ -30,7 +31,9 @@ function PlayState:update(dt)
   end
   
   if love.keyboard.keysPressed['escape'] then
-    gStateMachine:change('start')
+    gStateMachine:change('start', {
+      highScores = self.highScores
+    })
   end
   
   self.paddle:update(dt)
@@ -59,14 +62,16 @@ function PlayState:update(dt)
     
     if self.health == 0 then
       gStateMachine:change('game-over', {
-        score = self.score
+        score = self.score,
+        highScores = self.highScores
       })
     else
       gStateMachine:change('serve', {
         paddle = self.paddle,
         bricks = self.bricks,
         health = self.health,
-        score = self.score
+        score = self.score,
+        highScores = self.highScores
       })
     end
   end

@@ -4,6 +4,10 @@ StartState = Class{__includes = BaseState}
 -- 2 - High Scores
 local highlightedOption = 1
 
+function StartState:enter(params)
+  self.highScores = params.highScores
+end
+
 function StartState:update(dt)
   -- toggle highlighted option if we press up or down arrow keys
   if love.keyboard.keysPressed['up'] or love.keyboard.keysPressed['down'] then
@@ -20,7 +24,12 @@ function StartState:update(dt)
         bricks = LevelMaker.createMap(1),
         health = 3,
         score = 0,
-        level = 1
+        level = 1,
+        highScores = self.highScores
+      })
+    elseif highlightedOption == 2 then
+      gStateMachine:change('highscores', {
+          highScores = self.highScores
       })
     end
   end

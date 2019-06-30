@@ -8,6 +8,7 @@ require 'PlayState'
 require 'ServeState'
 require 'GameOverState'
 require 'VictoryState'
+require 'HighScoreState'
 
 require 'Paddle'
 require 'Ball'
@@ -125,9 +126,12 @@ function love.load(arg)
     ['serve'] = function() return ServeState() end,
     ['play'] = function() return PlayState() end,
     ['game-over'] = function() return GameOverState() end,
-    ['victory'] = function() return VictoryState() end
+    ['victory'] = function() return VictoryState() end,
+    ['highscores'] = function() return HighScoreState() end
   }
-  gStateMachine:change('start')
+  gStateMachine:change('start', {
+    highScores = loadHighScores()
+  })
   
   love.keyboard.keysPressed = {}
 end
@@ -194,5 +198,51 @@ function renderScore(score)
     love.graphics.setFont(gFonts['small'])
     love.graphics.print('Score:', VIRTUAL_WIDTH - 60, 5)
     love.graphics.printf(tostring(score), VIRTUAL_WIDTH - 50, 5, 40, 'right')
+end
+
+-- Loads highscores from a file in LOVE2D's default save directory
+function loadHighScores()
+  love.filesystem.setIdentity('breakout')
+  
+  if V11 then 
+    fileMissing = not love.filesystem.getInfo('breakout.lst')
+  else 
+    fileMissing = not love.filesystem.exists('breakout.lst')
+  end
+  
+  if fileMissing then
+    local scores = ''
+    for i = 10, 1, -1 do
+      scores = scores .. 'BKO\n'
+      scores = scores .. tostring(i * 1000) .. '\n'
+    end
+    
+    love.filesystem.write('breakout.lst', scores)
+  end
+  
+  local name = true
+  local currentName = nil
+  local counter = 1
+    
+  local scores = {}
+  for i = 1, 10 do
+    scores[i] = {
+      name, score = nil, nil
+    }
+  end
+    
+  for line in love.filesystem.lines('breakout.lst') do
+    if name then
+      scores[counter].name = string.sub(line, 1, 3)
+    else
+      scores[counter].score = tonumber(line)
+      counter = counter + 1
+    end
+      
+    -- toggle name flag
+    name = not name
+  end
+  
+  return scores
 end
   
