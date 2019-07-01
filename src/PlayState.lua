@@ -68,6 +68,7 @@ function PlayState:update(dt)
     else
       gStateMachine:change('serve', {
         paddle = self.paddle,
+        level = self.level,
         bricks = self.bricks,
         health = self.health,
         score = self.score,

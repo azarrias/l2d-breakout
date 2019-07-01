@@ -9,6 +9,7 @@ require 'ServeState'
 require 'GameOverState'
 require 'VictoryState'
 require 'HighScoreState'
+require 'EnterHighScoreState'
 
 require 'Paddle'
 require 'Ball'
@@ -116,7 +117,8 @@ function love.load(arg)
     ['brick-hit-1'] = love.audio.newSource('sounds/brick-hit-1.wav', 'static'),
     ['brick-hit-2'] = love.audio.newSource('sounds/brick-hit-2.wav', 'static'),
     ['hurt'] = love.audio.newSource('sounds/hurt.wav', 'static'),
-    ['victory'] = love.audio.newSource('sounds/victory.wav', 'static')
+    ['victory'] = love.audio.newSource('sounds/victory.wav', 'static'),
+    ['high-score'] = love.audio.newSource('sounds/high_score.wav', 'static')
   }
   
   gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()
@@ -127,7 +129,8 @@ function love.load(arg)
     ['play'] = function() return PlayState() end,
     ['game-over'] = function() return GameOverState() end,
     ['victory'] = function() return VictoryState() end,
-    ['highscores'] = function() return HighScoreState() end
+    ['highscores'] = function() return HighScoreState() end,
+    ['enter-high-score'] = function() return EnterHighScoreState() end
   }
   gStateMachine:change('start', {
     highScores = loadHighScores()
