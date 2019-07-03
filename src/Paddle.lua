@@ -3,7 +3,7 @@ Paddle = Class{}
 -- paddle movement speed
 local PADDLE_SPEED = 200
 
-function Paddle:init()
+function Paddle:init(skin)
   -- initialize to the horizontal middle a little above the bottom
   self.x = VIRTUAL_WIDTH / 2 - 32
   self.y = VIRTUAL_HEIGHT - 32
@@ -14,7 +14,7 @@ function Paddle:init()
   self.height = 16
   
   -- offset into the gPaddleSkins table (to manage its color)
-  self.skin = 1
+  self.skin = skin
   
   -- size goes from 1 (smallest) to 4 (largest)
   self.size = 2

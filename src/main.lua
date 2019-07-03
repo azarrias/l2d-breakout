@@ -10,6 +10,7 @@ require 'GameOverState'
 require 'VictoryState'
 require 'HighScoreState'
 require 'EnterHighScoreState'
+require 'PaddleSelectState'
 
 require 'Paddle'
 require 'Ball'
@@ -99,14 +100,16 @@ function love.load(arg)
     ['background'] = love.graphics.newImage('graphics/background.png'),
     ['main'] = love.graphics.newImage('graphics/breakout.png'),
     ['hearts'] = love.graphics.newImage('graphics/hearts.png'),
-    ['particle'] = love.graphics.newImage('graphics/particle.png')
+    ['particle'] = love.graphics.newImage('graphics/particle.png'),
+    ['arrows'] = love.graphics.newImage('graphics/arrows.png')
   }
   
   gFrames = {
     ['paddles'] = GenerateQuadsPaddles(gTextures['main']),
     ['balls'] = GenerateQuadsBalls(gTextures['main']),
     ['bricks'] = GenerateQuadsBricks(gTextures['main']),
-    ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9)
+    ['hearts'] = GenerateQuads(gTextures['hearts'], 10, 9),
+    ['arrows'] = GenerateQuads(gTextures['arrows'], 24, 24)
   }
   
   gSounds = {
@@ -118,7 +121,9 @@ function love.load(arg)
     ['brick-hit-2'] = love.audio.newSource('sounds/brick-hit-2.wav', 'static'),
     ['hurt'] = love.audio.newSource('sounds/hurt.wav', 'static'),
     ['victory'] = love.audio.newSource('sounds/victory.wav', 'static'),
-    ['high-score'] = love.audio.newSource('sounds/high_score.wav', 'static')
+    ['high-score'] = love.audio.newSource('sounds/high_score.wav', 'static'),
+    ['no-select'] = love.audio.newSource('sounds/no-select.wav', 'static'),
+    ['select'] = love.audio.newSource('sounds/select.wav', 'static')
   }
   
   gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()
@@ -130,7 +135,8 @@ function love.load(arg)
     ['game-over'] = function() return GameOverState() end,
     ['victory'] = function() return VictoryState() end,
     ['highscores'] = function() return HighScoreState() end,
-    ['enter-high-score'] = function() return EnterHighScoreState() end
+    ['enter-high-score'] = function() return EnterHighScoreState() end,
+    ['paddle-select'] = function() return PaddleSelectState() end
   }
   gStateMachine:change('start', {
     highScores = loadHighScores()
