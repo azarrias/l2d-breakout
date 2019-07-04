@@ -55,29 +55,29 @@ function PaddleSelectState:render()
         
   -- left arrow; should render normally if we're higher than 1, else
   -- in a shadowy form to let us know we're as far left as we can go
-  if self.currentPaddle == 1 then
+  if self.highlightedPaddle == 1 then
     -- tint; give it a dark gray with half opacity
-    love.graphics.setColor(40, 40, 40, 128)
+    setColor(40, 40, 40, 128)
   end
     
   love.graphics.draw(gTextures['arrows'], gFrames['arrows'][1], VIRTUAL_WIDTH / 4 - 24,
     VIRTUAL_HEIGHT - VIRTUAL_HEIGHT / 3)
    
   -- reset drawing color to full white for proper rendering
-  love.graphics.setColor(255, 255, 255, 255)
+  setColor(255, 255, 255, 255)
 
   -- right arrow; should render normally if we're less than 4, else
   -- in a shadowy form to let us know we're as far right as we can go
-  if self.currentPaddle == 4 then
+  if self.highlightedPaddle == 4 then
     -- tint; give it a dark gray with half opacity
-    love.graphics.setColor(40, 40, 40, 128)
+    setColor(40, 40, 40, 128)
   end
     
   love.graphics.draw(gTextures['arrows'], gFrames['arrows'][2], VIRTUAL_WIDTH - VIRTUAL_WIDTH / 4,
     VIRTUAL_HEIGHT - VIRTUAL_HEIGHT / 3)
     
   -- reset drawing color to full white for proper rendering
-  love.graphics.setColor(255, 255, 255, 255)
+  setColor(255, 255, 255, 255)
 
   -- draw the paddle itself, based on which we have selected
   love.graphics.draw(gTextures['main'], gFrames['paddles'][2 + 4 * (self.highlightedPaddle - 1)],
