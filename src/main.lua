@@ -123,7 +123,8 @@ function love.load(arg)
     ['victory'] = love.audio.newSource('sounds/victory.wav', 'static'),
     ['high-score'] = love.audio.newSource('sounds/high_score.wav', 'static'),
     ['no-select'] = love.audio.newSource('sounds/no-select.wav', 'static'),
-    ['select'] = love.audio.newSource('sounds/select.wav', 'static')
+    ['select'] = love.audio.newSource('sounds/select.wav', 'static'),
+    ['music'] = love.audio.newSource('sounds/music.wav', 'static')
   }
   
   gBackgroundWidth, gBackgroundHeight = gTextures['background']:getDimensions()
@@ -141,6 +142,9 @@ function love.load(arg)
   gStateMachine:change('start', {
     highScores = loadHighScores()
   })
+
+  gSounds['music']:play()
+  gSounds['music']:setLooping(true)
   
   love.keyboard.keysPressed = {}
 end
