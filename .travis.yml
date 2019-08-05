@@ -1,0 +1,32 @@
+dist: trusty
+language: generic
+install: true
+
+addons:
+  apt:
+    packages:
+    - lua5.1
+jdk: openjdk8
+
+script: "[[ -n $TRAVIS_TAG ]] && ./build.sh web android || ./build.sh" # web and android only for tags    
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    # travis encrypt <token> 
+    secure: jjlJYHCDuO+Sey9rXTkLjQh+Fj01U0EpkP9diQbfEG2RxwPeSqjtzP4KczSiaP/ph2rs+zlypnstPBsOxtBah1/jXNLk3pXcZ/UZ813o2/w2SfStCIWwnLJdG5BxKuiAUWGuk9wYcKMPT3bxBCZjaFfq6ugWj8isSXBphKz0zOZBJHab9nfRimmYbB6fOtoR4/ysDLcTYNtKMH0hEpqwdr67776bgdyPHLw/HyBeOh8l1HPbvZjFKsi5Z2Bl5zc550FOtbcQGISjv9PvDv9TumbtZXuUxxETDvYYkg/SOgyRO8EkHAsywQZU4SKppPFEOMycBQt3j48D5pg+Sa1ANqEyUGQe3KEOZGPCtu9r6xfFfw+sAkjcQqjzNp1tZI+e9uDT1FO1dq9G18+2EGeg7DSVlZZ8qcB21zdBdU1MZBTPhIpZbYJROcxvb/Ag0ZkVVD2Uon+FHiESkJFi1tGBVsS0Rc3LsNg+zxmF1sZAUdv71OOi8BAsPHEzSUa+rxGuhnrfxFN38bKUWZU0EpiRtZjK3Ro7Ffk+0Ycm7K6tmH/rrm8XAAWJo4zSjH05sB0W9p6UhS+8qSaGqN2S2/MTQzI5sm+/jPGOzvVUsQdtZIlEFuMk6YW+t+zc9Ppp59Fk4xxqEsvvZprY6chpH33kQdzbJpuxED/taXF23+WfBHk=
+  file:
+  - target/breakout.love
+  - target/breakout-win.zip
+  - target/breakout-web.zip
+  - target/breakout-debug.apk
+  - target/breakout-release-unsigned.apk
+  on:
+    tags: true
+    all_branches: true
+after_success:
+- "[[ -n $TRAVIS_TAG ]] && ./build.sh deploy $TRAVIS_REPO_SLUG"
+env:
+  global:
+   # travis encrypt GH_TOKEN=<token>
+  - secure: Tv/kqtYKSDl1X1tB7fUO684MNaC/qi02lI3GJ6aBr3L87JvfmHuqAme4BE3CYoQakQxp8bTcKje6gnpPVZmHHe7gabB4PbVxnCe7DR42c+cZICruOAf/MfuVPfMLviCNtd5xE8sxdY0UJaPxrx/fnU7Uf4wi3Y4RWivFdaQQrsguyUIb8owFeAPkrnV1D4jdJa8lgfsH1qEL+xhcVlbXKZPQVZqXHBXjfu5WBnj7y8vKt60Kjon4pgQ0ocVt0TEY9KMm+ItwbmLdsdDkDfKssnVrGM3iosVBk6wUpFbNKGWoc/nb7w4sIhNTrWrZ0fXchLwoRDnD7qkPtoGTD6qttyz+qQfrv8GTi3HaBjtSxKS800JqjKXO/ImBruSs+buDb61gQhWEnhM93264B0upvBjHp+hIroKP01F0iMqrAUGuNZ4t9BKfyX/GMijBie/5UDdRv0XxXW4zIv6RHc35TygefRlMyBfXqUEDz0IO1Jn91yH78jKviHOzCPw3FrF+wsJ+N2mcaINcv3dobLC2wh87wJX9lUPU18Cs232b71DEIo6SXey05JgsqTs5TKD2XC+jDOvtjr/3LjB2as3p34z4O4zhCLvs+QC6i4BuH7mGEher/QrYI14LyVY1Obdjo5WD1qMlZJtM9qR3N/9hV1QebvQNezb8kVL8SSroroI=
