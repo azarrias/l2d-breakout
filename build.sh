@@ -39,7 +39,7 @@ fi
 
 ##### build #####
 
-find . -iname "*.lua" | xargs luac -p || { echo 'luac parse test failed' ; exit 1; }
+#find . -iname "*.lua" | xargs luac -p || { echo 'luac parse test failed' ; exit 1; }
 
 mkdir "target"
 
@@ -50,7 +50,7 @@ cp -r src target
 cd target/src
 
 # compile .ink story into lua table so the runtime will not need lpeg dep.
-lua lib/pink/pink/pink.lua parse game.ink > game.lua
+#lua lib/pink/pink/pink.lua parse game.ink > game.lua
 
 zip -9 -r - . > "../${P}.love"
 cd -
