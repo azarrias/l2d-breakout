@@ -29,7 +29,7 @@ function Brick:init(x, y)
   self.particles:setLinearAcceleration(-15, 0, 15, 80)
   
   -- just to keep this compatible
-  if V11 then 
+  if V11 and not WEB_OS then 
     self.particles:setEmissionArea('normal', 10, 10)
   else 
     self.particles:setAreaSpread('normal', 10, 10)

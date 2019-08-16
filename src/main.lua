@@ -20,6 +20,7 @@ require 'Util'
 require 'LevelMaker'
 
 MOBILE_OS = love.system.getOS() == 'Android' or love.system.getOS() == 'OS X'
+WEB_OS = love.system.getOS() == 'Web'
 GAME_TITLE = 'Breakout'
 WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
 VIRTUAL_WIDTH, VIRTUAL_HEIGHT = 432, 243
@@ -217,7 +218,9 @@ end
 function loadHighScores()
   love.filesystem.setIdentity('breakout')
   
-  if V11 then 
+  if WEB_OS then
+    fileMissing = true
+  elseif V11 then 
     fileMissing = not love.filesystem.getInfo('breakout.lst')
   else 
     fileMissing = not love.filesystem.exists('breakout.lst')
