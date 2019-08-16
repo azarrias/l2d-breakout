@@ -11,7 +11,7 @@ function PlayState:enter(params)
   
   -- give ball random starting velocity
   self.ball.dx = math.random(-200, 200)
-  self.ball.dy = math.random(-50, -60)
+  self.ball.dy = math.random(-60, -50)
   
   self.paused = false
 end
@@ -91,7 +91,8 @@ function PlayState:update(dt)
           paddle = self.paddle,
           health = self.health,
           score = self.score,
-          ball = self.ball
+          ball = self.ball,
+          highScores = self.highScores
         })
       end
       

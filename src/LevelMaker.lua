@@ -63,38 +63,30 @@ function LevelMaker.createMap(level)
           index = math.random(2)
           colors[2] = math.random(1, maxColor)
           tiers[2] = math.random(0, maxTier)
-        elseif rowPattern == ROW_PATTERN_NONE then
-          goto continue
         end
-        
-        for x = 0, numCols - 1 do  
-          if skipColVariant and skipColFlag then
-            skipColFlag = not skipColFlag
-            goto continue
-          else
-            skipColFlag = not skipColFlag
-          end
-          
-          b = Brick(
-            x * BRICK_WIDTH + COL_PADDING  -- x-coordinate
-            + (MAX_COLS - numCols) * BRICK_WIDTH / 2, -- left-side padding for when there are fewer than 13 columns
-            
-            y * BRICK_HEIGHT
-          ) 
-            
-          b.color = colors[index]
-          b.tier = tiers[index]
-          
-          if rowPattern == ROW_PATTERN_ALTERNATE then
-            index = index % 2 + 1
-          end
 
-          table.insert(bricks, b)
+        if rowPattern ~= ROW_PATTERN_NONE then
+          for x = 0, numCols - 1 do  
+            if not (skipColVariant and skipColFlag) then 
+              b = Brick(
+                x * BRICK_WIDTH + COL_PADDING  -- x-coordinate
+                + (MAX_COLS - numCols) * BRICK_WIDTH / 2, -- left-side padding for when there are fewer than 13 columns
+            
+                y * BRICK_HEIGHT
+              ) 
+            
+              b.color = colors[index]
+              b.tier = tiers[index]
           
-          -- Use goto as a workaround for lua not having the continue statement
-          ::continue::
+              if rowPattern == ROW_PATTERN_ALTERNATE then
+                index = index % 2 + 1
+              end
+
+              table.insert(bricks, b)
+            end
+            skipColFlag = not skipColFlag
+          end
         end
-        ::continue::
       end 
     until (#bricks > 0)
 
