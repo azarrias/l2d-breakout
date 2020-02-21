@@ -174,7 +174,7 @@ function love.draw()
     VIRTUAL_WIDTH / (gBackgroundWidth - 1), VIRTUAL_HEIGHT / (gBackgroundHeight - 1))
   gStateMachine:render()
   
-  displayFPS(5, 5)
+--  displayFPS(5, 5)
   
   push:apply('end')
 end

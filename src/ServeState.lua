@@ -16,7 +16,7 @@ function ServeState:update(dt)
   self.ball.x = self.paddle.x + (self.paddle.width / 2) - (self.ball.width / 2)
   self.ball.y = self.paddle.y - self.ball.height
   
-  if love.keyboard.keysPressed['enter'] or love.keyboard.keysPressed['return'] then
+  if love.keyboard.keysPressed['space'] then
     -- pass in all needed state variables into the PlayState
     gStateMachine:change('play', {
       paddle = self.paddle,
